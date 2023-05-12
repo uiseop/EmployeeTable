@@ -1,0 +1,19 @@
+{
+  "name": "employeetable",
+  "version": "1.0.0",
+  "description": "<img src=\"https://grepp-programmers.s3.amazonaws.com/production/file_resource/2670/img-skillup-bg-hr-table.jpg\"/>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uiseop/EmployeeTable.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uiseop/EmployeeTable/issues"
+  },
+  "homepage": "https://github.com/uiseop/EmployeeTable#readme"
+}
