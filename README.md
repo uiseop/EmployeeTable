@@ -24,3 +24,4 @@
 ## CRA 없이 개발 환경 구축하기
 
 - CRA 없이 개발환경을 구축해보고, 더 나아가 TS까지 적용해보도록 한다.
+- SPA이기 때문에 devServer를 사용할 때에는 historyApiFallback: true옵션을 사용해야지 라우팅 처리가 가능하다!
