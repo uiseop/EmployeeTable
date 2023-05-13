@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDomClient from "react-dom/client";
+import Router from "./Router";
 
 const container = document.getElementById("root");
 const root = ReactDomClient.createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <h1>Hello, React!</h1>
+    <Router />
   </React.StrictMode>
 );
