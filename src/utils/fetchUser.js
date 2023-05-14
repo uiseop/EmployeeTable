@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const BASE_URL = "https://jsonplaceholder.typicode.com/comments?_page=";
-const client = axios;
+const baseURL = "https://jsonplaceholder.typicode.com/comments?_page=";
+const client = axios.create({ baseURL });
 
 const fetchUser = (page) => {
   client
-    .get(`${BASE_URL}${page}`)
+    .get(page)
     .then(({ data }) => {
       console.log(data);
       return data;
