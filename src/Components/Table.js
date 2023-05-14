@@ -5,13 +5,22 @@ const Table = ({ comments }) => {
     <StyledTable>
       <thead>
         <tr>
-          {Object.keys(comments[0]).map((title) => {
-            return <th key={title}>{title}</th>;
-          })}
+          <th>ID</th>
+          <th>NAME</th>
+          <th>E-MAIL</th>
         </tr>
       </thead>
       <tbody>
-        <tr></tr>
+        {comments.map((comment) => {
+          const { id, name, email } = comment;
+          return (
+            <tr key={id}>
+              <td>{id}</td>
+              <td>{name}</td>
+              <td>{email}</td>
+            </tr>
+          );
+        })}
       </tbody>
     </StyledTable>
   );
