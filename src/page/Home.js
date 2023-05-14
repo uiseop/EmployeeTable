@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Table from "../Components/Table";
 import useFetchUser from "../Hooks/useFetchUser";
+import axios from "axios";
 
 const Home = () => {
   const [page, setPage] = useState("1");
-  const [isLoading, isError, fetchUser] = useFetchUser();
   const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleClick = (e) => {
     const { target } = e;
@@ -15,17 +16,38 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchAndSetUser(page);
-  }, [page]);
+    setIsLoading(true);
 
-  const fetchAndSetUser = async (page) => {
-    const data = await fetchUser(page);
-    setComments(data);
-  };
+    const cancelToken = axios.CancelToken.source();
+
+    axios
+      .get("https://jsonplaceholder.typicode.com/comments?_page=1", {
+        cancelToken: cancelToken.token,
+      })
+      .then(({ data }) => {
+        setComments(data);
+      })
+      .catch((err) => {
+        if (axios.isCancel(err)) {
+          console.log("취소됨");
+        } else {
+          // handle Errors
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+
+    return () => {
+      cancelToken.cancel("취소해!");
+    };
+  }, [page]);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
+
+  // handle Erros
 
   return (
     <Wrapper>
@@ -33,7 +55,7 @@ const Home = () => {
       <div className="area" id="dropdown">
         드롭다운을 이 영역에 구현해주세요
       </div>
-      <Table comments={comments} />
+      {comments.length > 0 ? <Table comments={comments} /> : ""}
       <div className="area" id="pagination">
         <button className="arrow">&lt;&lt;</button>
         <button onClick={handleClick}>1</button>
