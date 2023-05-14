@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import fetchUser from "../utils/fetchUser";
 import { styled } from "styled-components";
 import Table from "../Components/Table";
+import useFetchUser from "../Hooks/useFetchUser";
 
 const Home = () => {
   const [page, setPage] = useState("1");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(null);
+  const [isLoading, isError, fetchUser] = useFetchUser();
   const [comments, setComments] = useState([]);
 
   const handleClick = (e) => {
@@ -16,10 +15,17 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    fetchUser(page);
-    setIsLoading(false);
+    fetchAndSetUser(page);
   }, [page]);
+
+  const fetchAndSetUser = async (page) => {
+    const data = await fetchUser(page);
+    setComments(data);
+  };
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <Wrapper>

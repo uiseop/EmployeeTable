@@ -5,10 +5,9 @@ const Table = ({ comments }) => {
     <StyledTable>
       <thead>
         <tr>
-          {comments.length &&
-            Object.keys(comments[0]).map((title) => {
-              return <th map={title}>{title}</th>;
-            })}
+          {Object.keys(comments[0]).map((title) => {
+            return <th key={title}>{title}</th>;
+          })}
         </tr>
       </thead>
       <tbody>
