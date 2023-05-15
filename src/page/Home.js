@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import Table from "../Components/Table";
 import axios from "axios";
 import Pagination from "@/Components/Pagination";
+import DropDown from "@/Components/DropDown";
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -57,14 +58,17 @@ const Home = () => {
     }
   }, []);
 
+  const handleChange = (e) => {
+    setLimit(e.target.value);
+    setPage(1)
+  };
+
   // handle Erros
 
   return (
     <Wrapper>
       <Title>Grepp Enterprise</Title>
-      <div className="area" id="dropdown">
-        드롭다운을 이 영역에 구현해주세요
-      </div>
+      <DropDown limit={limit} handleChange={handleChange} />
       {comments.length > 0 ? (
         isLoading ? (
           <h1>Loading...</h1>
