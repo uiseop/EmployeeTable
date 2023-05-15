@@ -8,6 +8,8 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [perPage, setPerPage] = useState(10);
+  const [maxPage, setMaxPage] = useState(10);
 
   useEffect(() => {
     setIsLoading(true);
@@ -36,6 +38,10 @@ const Home = () => {
       cancelToken.cancel("취소해!");
     };
   }, [page]);
+
+  useEffect(() => {
+    setMaxPage(100 / perPage);
+  }, [perPage]);
 
   const handleClick = useCallback((e) => {
     const { target } = e;

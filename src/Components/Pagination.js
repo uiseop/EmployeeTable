@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 const Pagination = ({ handleClick, page }) => {
   const [totalPage, setTotalPage] = useState(5);
 
+
   return (
     <Wrapper>
       {page !== 1 && (
