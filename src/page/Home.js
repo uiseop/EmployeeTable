@@ -8,8 +8,10 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [perPage, setPerPage] = useState(10);
+  const [limit, setLimit] = useState(10);
   const [maxPage, setMaxPage] = useState(10);
+  const offset = (page - 1) * limit;
+  const total = 100;
 
   useEffect(() => {
     setIsLoading(true);
@@ -40,8 +42,8 @@ const Home = () => {
   }, [page]);
 
   useEffect(() => {
-    setMaxPage(100 / perPage);
-  }, [perPage]);
+    setMaxPage(Math.ceil(100 / limit));
+  }, [limit]);
 
   const handleClick = useCallback((e) => {
     const { target } = e;
@@ -51,7 +53,7 @@ const Home = () => {
     } else if (value === "<<") {
       setPage((cur) => cur - 1);
     } else {
-      setPage(value);
+      setPage(parseInt(value));
     }
   }, []);
 
@@ -72,7 +74,12 @@ const Home = () => {
       ) : (
         ""
       )}
-      <Pagination handleClick={handleClick} page={page} />
+      <Pagination
+        handleClick={handleClick}
+        page={page}
+        total={total}
+        limit={limit}
+      />
     </Wrapper>
   );
 };

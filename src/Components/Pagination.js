@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
-const Pagination = ({ handleClick, page }) => {
-  const [totalPage, setTotalPage] = useState(5);
-
+const Pagination = ({ handleClick, page, total, limit }) => {
+  const numPages = Math.ceil(total / limit);
 
   return (
     <Wrapper>
@@ -12,21 +11,23 @@ const Pagination = ({ handleClick, page }) => {
           &lt;&lt;
         </button>
       )}
-      {Array.from({ length: totalPage }, (_, idx) => {
-        if (page == idx + 1) {
+      {Array(numPages)
+        .fill(null)
+        .map((_, idx) => {
+          if (page == idx + 1) {
+            return (
+              <button className="selected" key={idx} onClick={handleClick}>
+                {idx + 1}
+              </button>
+            );
+          }
           return (
-            <button className="selected" key={idx} onClick={handleClick}>
+            <button key={idx} onClick={handleClick}>
               {idx + 1}
             </button>
           );
-        }
-        return (
-          <button key={idx} onClick={handleClick}>
-            {idx + 1}
-          </button>
-        );
-      })}
-      {page !== totalPage && (
+        })}
+      {page !== numPages && (
         <button className="arrow" onClick={handleClick}>
           &gt;&gt;
         </button>
