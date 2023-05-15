@@ -1,19 +1,13 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Table from "../Components/Table";
 import axios from "axios";
+import Pagination from "@/Components/Pagination";
 
 const Home = () => {
-  const [page, setPage] = useState("1");
+  const [page, setPage] = useState(1);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [totalPage, setTotalPage] = useState(5);
-
-  const handleClick = (e) => {
-    const { target } = e;
-    const value = target.innerText;
-    setPage(value);
-  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -43,6 +37,18 @@ const Home = () => {
     };
   }, [page]);
 
+  const handleClick = useCallback((e) => {
+    const { target } = e;
+    const value = target.innerText;
+    if (value === ">>") {
+      setPage((cur) => cur + 1);
+    } else if (value === "<<") {
+      setPage((cur) => cur - 1);
+    } else {
+      setPage(value);
+    }
+  }, []);
+
   // handle Erros
 
   return (
@@ -60,17 +66,7 @@ const Home = () => {
       ) : (
         ""
       )}
-      <div className="area" id="pagination">
-        <button className="arrow">&lt;&lt;</button>
-        {Array.from({ length: totalPage }, (_, idx) => {
-          return (
-            <button key={idx} onClick={handleClick}>
-              {idx + 1}
-            </button>
-          );
-        })}
-        <button className="arrow">&gt;&gt;</button>
-      </div>
+      <Pagination handleClick={handleClick} page={page} />
     </Wrapper>
   );
 };
